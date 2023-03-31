@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// You will see we have NoAction added to all relations.
+// This is a temporary workaround until the root issue is resolved by Prisma.
+// https://github.com/prisma/prisma/issues/10758
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity", "interactiveTransactions"]
+  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id            String          @id @default(uuid())
+  nonce         String?
+  address       String          @unique
+  created_at    DateTime        @default(now())
+  Session       Session[]
+  ActionRequest ActionRequest[]
+
+  Wallet Wallet[]
+  Charge Charge[]
+  @@map("users")
+}
+
+model Session {
+  id         String    @id @default(uuid())
+  data       Json
+  expires    DateTime?
+  user_id    String?
+  created_at DateTime  @default(now())
+  User       User?     @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+
+  @@index([user_id])
+  @@map("sessions")
+}
+
+model Asuna {
+  id               Int                @id
+  token_uri        String
+  metadata         Json
+  AccessoryToAsuna AccessoryToAsuna[]
+  ActionRequest    ActionRequest[]
+
+  @@map("asunas")
+}
+
+model Accessory {
+  id               Int                @id
+  token_uri        String
+  metadata         Json
+  AccessoryToAsuna AccessoryToAsuna[]
+
+  @@map("accessories")
+}
+
+// AccessoryToAsuna reflects what accessories reside on an asuna
+model AccessoryToAsuna {
+  accessory_id  Int             @id
+  asuna_id      Int?
+  Asuna         Asuna?          @relation(fields: [asuna_id], references: [id], onUpdate: NoAction)
+  Accessory     Accessory       @relation(fields: [accessory_id], references: [id], onUpdate: NoAction)
+  ActionRequest ActionRequest[]
+
+  @@index([asuna_id])
+  @@map("accessory_to_asuna")
+}
+
+// ActionRequest tracks all transactions that are sent to equip and unequip an accessory.
+// Once a transaction succeeds or fail, that change should also reflect here.
+model ActionRequest {
+  id               Int              @id @default(autoincrement())
+  accessory_id     Int
+  asuna_id         Int
+  req_address      String
+  action_type      ActionType
+  txn_state        TxnState
+  txn_hash         String
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @default(now()) @updatedAt
+  Requester        User             @relation(fields: [req_address], references: [address], onUpdate: NoAction)
+  AccessoryToAsuna AccessoryToAsuna @relation(fields: [accessory_id], references: [accessory_id], onUpdate: NoAction)
+  Asuna            Asuna            @relation(fields: [asuna_id], references: [id], onUpdate: NoAction)
+
+  @@unique([txn_hash, accessory_id, asuna_id, action_type])
+  @@index([accessory_id])
+  @@index([asuna_id])
+  @@index([asuna_id, action_type, txn_state])
+  @@map("action_requests")
+}
+
+model ActionPrice {
+  id          Int        @id @default(autoincrement())
+  action_type ActionType @unique
+  cost        Int        @default(0)
+
+  @@map("action_prices")
+}
+
+model Wallet {
+  id      Int    @id @default(autoincrement())
+  user_id String @unique
+  user    User   @relation(fields: [user_id], references: [id])
+  balance Int    @default(0)
+
+  @@index([user_id])
+  @@map("wallets")
+}
+
+model Charge {
+  id         String   @id
+  amount     Int
+  status     String
+  hosted_url String
+  expires_at DateTime
+  created_at DateTime
+  updated_at DateTime @updatedAt
+  user_id    String
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@map("charges")
+}
+
+enum TxnState {
+  Pending
+  Failed
+  Success
+}
+
+enum ActionType {
+  Equip
+  Unequip
+}
