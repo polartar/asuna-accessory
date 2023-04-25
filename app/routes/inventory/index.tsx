@@ -23,13 +23,13 @@ export const loader: LoaderFunction = async ({ request }) => {
             getOwnAsunas(AsunaContract, user.address, { readOnly: false }),
             getOwnAccessories(AccessoryContract, user.address, { readOnly: false }),
         ])
+
         return json<LoaderData>({
             user,
             asunas: data[0],
             accessories: data[1],
         })
     } catch (err) {
-        console.error(err)
         return json<LoaderData>({
             user,
             asunas: [],

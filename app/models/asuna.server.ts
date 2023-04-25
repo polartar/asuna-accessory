@@ -131,6 +131,7 @@ export function fromAsunaDB(asuna: Asuna): AsunaDTO {
 
 async function getOwnerAsunaTokenIds(contract: typeof AsunaContract, ownerAddr: string): Promise<number[]> {
     const bal = await getAsunaBalance(contract, ownerAddr)
+
     const tokenIdPromises: Promise<BigNumber>[] = []
     for (let i = 0; i < bal; i++) {
         tokenIdPromises.push(contract.tokenOfOwnerByIndex(ownerAddr, i))
