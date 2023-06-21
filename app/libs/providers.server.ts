@@ -6,7 +6,7 @@ import AccessoriesAbiJson from "./accessories_abi.json"
 import AccessoriesHolderAbiJson from "./accessories_holder_abi.json"
 
 // Update with latest contract addresses.
-export const ASUNA_ADDR = "0xC5B8758773a69ae33B8D8B95f75de2f626498C29"
+export const ASUNA_ADDR = "0x5d6b088DadD5DA64B7CDBE44340f0dD72364d7a1"
 export const ACCESSORY_ADDR = "0xB43c8A75A8869fAA8F111facb16E7f1514aAd894"
 export const ACCESSORY_HOLDER_ADDR = "0xfdC1f085a3bf0DbE115650633d7A163953C49327"
 
@@ -27,7 +27,7 @@ export const MumbaiProvider = new ethers.providers.JsonRpcProvider(
 )
 
 // https://rinkeby.etherscan.io/address/0x12D35409f526D54FaDef3C79E009CB3Fb9a8044E
-export const AsunaContract = new ethers.Contract(ASUNA_ADDR, AsunasAbi, GoerlibyProvider)
+export const AsunaContract = new ethers.Contract(ASUNA_ADDR, AsunasAbi, MumbaiProvider)
 
 // https://mumbai.polygonscan.com/address/0xB43c8A75A8869fAA8F111facb16E7f1514aAd894
 export const AccessoryContract = new ethers.Contract(ACCESSORY_ADDR, AccessoriesAbi, MumbaiProvider)
