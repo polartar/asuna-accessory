@@ -6,6 +6,8 @@ import { EthProvider } from "~/libs/providers.client"
 import { createUser, getUser, getUserByAddress, updateUserNonce } from "~/models/user.server"
 import { createUserSession } from "~/models/session.server"
 import { setEthAddressCookie2 } from "~/libs/cookies"
+import { Button } from "~/components/button"
+import { useState } from "react"
 
 type LoaderData = {
     message: string | null
@@ -66,11 +68,14 @@ export const action: ActionFunction = async ({ request }) => {
         if (signedAddress.toLowerCase() === user.address.toLowerCase()) {
             return createUserSession(user.id, "/inventory")
         }
-        return json({
-            error: "Invalid signature: signer address does not match user's address. Head back to the home page and refresh your inventory."
-        }, {
-            status: 401
-        })
+        return json(
+            {
+                error: "Invalid signature: signer address does not match user's address. Head back to the home page and refresh your inventory.",
+            },
+            {
+                status: 401,
+            }
+        )
     }
 
     if (formAction === "connect") {
@@ -107,6 +112,7 @@ export const action: ActionFunction = async ({ request }) => {
 export default function LoginView() {
     const actionData = useActionData()
     const { address, message } = useLoaderData<LoaderData>()
+    const [isLoading, setIsLoading] = useState(false)
     const submit = useSubmit()
 
     async function onWalletConnect() {
@@ -121,7 +127,7 @@ export default function LoginView() {
         if (!message) {
             return
         }
-
+        setIsLoading(true)
         const signer = EthProvider.getSigner()
         const signature = await signer.signMessage(message)
         submit({ signature, action: "authenticate" }, { method: "post" })
@@ -132,20 +138,29 @@ export default function LoginView() {
             {!address || !message ? (
                 <form className="w-full text-center">
                     <div>
-                        <button type="button" onClick={onWalletConnect}>
+                        <Button type="button" onClick={onWalletConnect}>
                             Register
-                        </button>
+                        </Button>
                     </div>
                 </form>
             ) : (
-                <form className="w-full text-center">
-                    <div>
-                        <button type="button" onClick={onLogin}>
-                            Login
-                        </button>
-                    </div>
-                    {actionData?.error && <p className="text-red-700">{actionData.error}</p>}
-                </form>
+                <>
+                    {isLoading ? (
+                        <div className="m-auto text-center ">
+                            <img src="/asuna_box.gif" alt="loading"></img>
+                            <span>Login...</span>
+                        </div>
+                    ) : (
+                        <form className="w-full text-center">
+                            <div>
+                                <Button type="button" onClick={onLogin}>
+                                    Login
+                                </Button>
+                            </div>
+                            {actionData?.error && <p className="text-red-700">{actionData.error}</p>}
+                        </form>
+                    )}
+                </>
             )}
         </div>
     )

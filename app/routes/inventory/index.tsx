@@ -8,7 +8,7 @@ import { logout, requireUserId } from "~/models/session.server"
 import { AccessoryDTO, AsunaDTO } from "~/models/types"
 import { getUser } from "~/models/user.server"
 
-type LoaderData = {
+export type LoaderData = {
     user: User
     asunas: AsunaDTO[]
     accessories: AccessoryDTO[]
@@ -47,10 +47,7 @@ export default function InventoryView() {
 
     return (
         <div className="p-2">
-            <p>{user.address}</p>
-            <p>Authenticated Page</p>
-
-            <div className="mt-8 flex">
+            <div className="mt-8 flex justify-end">
                 <Form method="post">
                     <button
                         type="submit"
@@ -70,7 +67,7 @@ export default function InventoryView() {
                                 <li key={`asuna-${a.token_id}`}>
                                     <Link to={`/inventory/${a.token_id}`}>
                                         <img
-                                            className="w-24"
+                                            className="w-32 hover:mt-[-2px] rounded-md"
                                             alt={`Asuna ${a.token_id}`}
                                             src={`https://tunes.mypinata.cloud/ipfs/${a?.metadata?.image.slice(7)}`}
                                         ></img>

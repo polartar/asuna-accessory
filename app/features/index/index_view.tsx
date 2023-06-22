@@ -130,9 +130,8 @@ export function IndexView() {
     }
 
     return (
-        <div className="p-4">
+        <div className="  text-center">
             <h1>Welcome to your Asuna Inventory</h1>
-            {address && <p>Your address: {address}</p>}
             <p>Please refresh inventory if you've recently switched or connecting your wallet for the first time.</p>
 
             <form className="mt-8">
@@ -144,14 +143,14 @@ export function IndexView() {
 
             <form>
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+                    <div className="  p-3">
                         <h2 className="text-2xl">Asunas</h2>
                         <ul className="mt-6 grid gap-2 grid-cols-3 justify-items-center">
                             {asunas.map(a => {
                                 return (
                                     <li key={`asuna-${a.token_id}`}>
                                         <img
-                                            className="w-24"
+                                            className=" w-32"
                                             alt={`Asuna ${a.token_id}`}
                                             src={`https://tunes.mypinata.cloud/ipfs/${a?.metadata?.image.slice(7)}`}
                                         ></img>
@@ -160,9 +159,9 @@ export function IndexView() {
                             })}
                         </ul>
                     </div>
-                    <div>
+                    <div className="p-3">
                         <h2 className="text-2xl">Accessories</h2>
-                        <ul className="mt-6 grid gap-6 grid-cols-3 justify-items-center">
+                        <ul className="mt-6 grid gap-2 grid-cols-3 justify-items-center">
                             {accessories.map(a => {
                                 return (
                                     <li key={`accessory-${a.token_id}`}>
