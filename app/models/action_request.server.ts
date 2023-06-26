@@ -94,12 +94,9 @@ export async function createActionRequest(input: {
         async tx => {
             let txn: { hash: string } = { hash: "" }
             if (input.actionType === "Equip") {
-                console.log("getting price")
                 const equipPrice = await getActionPrice(tx, "Equip")
-                console.log({ equipPrice })
                 if (equipPrice > 0) {
                     const wallet = await getWalletByAddressTx(tx, input.requesterAddress)
-                    console.log({ wallet })
                     if (wallet.balance < equipPrice) {
                         throw new Error("Not enough credit")
                     }
@@ -114,7 +111,6 @@ export async function createActionRequest(input: {
                     asunaId: input.asunaId,
                     asunaOwnerAddress: input.requesterAddress,
                 })
-                console.log({ txn })
             } else if (input.actionType === "Unequip") {
                 const unequipPrice = await getActionPrice(tx, "Unequip")
                 if (unequipPrice > 0) {

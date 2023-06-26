@@ -15,6 +15,7 @@ if (!process.env.KEY_PAIR_ARN) {
 //     },
 //     MumbaiProvider
 // )
+
 const HotWalletMumbaiSigner = new Wallet(process.env.PRIVATE_KEY || "", MumbaiProvider)
 
 export const AccessoriesHolderHotContract = new ethers.Contract(

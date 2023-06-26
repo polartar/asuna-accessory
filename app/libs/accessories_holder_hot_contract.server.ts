@@ -15,7 +15,7 @@ export async function equipEquipmentsTxn(input: {
             gasPrice: ethers.utils.parseUnits("50", "gwei"),
         }
     )
-    console.log("equip txn", txn)
+
     return txn
 }
 
@@ -33,6 +33,6 @@ export async function unequipEquipmentsTxn(input: {
             gasPrice: ethers.utils.parseUnits("50", "gwei"),
         }
     )
-    console.log("unequip txn", txn)
+
     return txn
 }
