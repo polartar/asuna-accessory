@@ -7,8 +7,10 @@ import AccessoriesHolderAbiJson from "./accessories_holder_abi.json"
 
 // Update with latest contract addresses.
 export const ASUNA_ADDR = "0x5d6b088DadD5DA64B7CDBE44340f0dD72364d7a1"
-export const ACCESSORY_ADDR = "0xB43c8A75A8869fAA8F111facb16E7f1514aAd894"
-export const ACCESSORY_HOLDER_ADDR = "0xfdC1f085a3bf0DbE115650633d7A163953C49327"
+// export const ACCESSORY_ADDR = "0xB43c8A75A8869fAA8F111facb16E7f1514aAd894"
+export const ACCESSORY_ADDR = "0x751b9bAb5500d807EFC8c4dcc8aC51C10CcB8FA1"
+// export const ACCESSORY_HOLDER_ADDR = "0xfdC1f085a3bf0DbE115650633d7A163953C49327"
+export const ACCESSORY_HOLDER_ADDR = "0x0f4dA6F88cdB5E7210F4260700DDF6927B1C66Ad"
 
 // Abis are copied from project root /artifacts/contracts after hardhat compilation.
 export const AsunasAbi = AsunasAbiJson.abi

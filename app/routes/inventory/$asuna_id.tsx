@@ -135,7 +135,7 @@ export default function InventoryAsunaView() {
                 <p>Balance ${wallet?.balance ?? 0}</p>
             </div>
 
-            <div className="grid md:grid-cols-2 mt-4">
+            <div className="grid md:grid-cols-2 mt-4 gap-3">
                 <div>
                     <div>
                         <p>Asuna {asuna.token_id}</p>
@@ -150,7 +150,11 @@ export default function InventoryAsunaView() {
                     <form method="post">
                         <div>
                             <p>on mac, cmd + click to select multiple options</p>
-                            <button name="action" value="unequip" className="px-2 mt-1 border-black border">
+                            <button
+                                name="action"
+                                value="unequip"
+                                className="px-4 py-2 mt-1   text-sm font-medium rounded-3xl bg-[#818cf8] hover:bg-[#6366f1] shadow-sm"
+                            >
                                 Unequip
                                 {prices.unequip > 0}
                                 <span> (Cost ${prices.unequip})</span>
@@ -160,7 +164,7 @@ export default function InventoryAsunaView() {
                             name="accessory_ids"
                             size={equippedAccessories.length}
                             multiple
-                            className="w-full mt-2 max-w-md"
+                            className="w-full mt-2 max-w-md text-white bg-transparent border border-gray-400 rounded"
                         >
                             {equippedAccessories.map(acc => {
                                 return (
@@ -178,7 +182,11 @@ export default function InventoryAsunaView() {
                     <form method="post">
                         <div>
                             <p>on mac, cmd + click to select multiple options</p>
-                            <button name="action" value="equip" className="px-2 mt-1 border-black border">
+                            <button
+                                name="action"
+                                value="equip"
+                                className="px-4 py-2 mt-1   text-sm font-medium rounded-3xl bg-[#818cf8] hover:bg-[#6366f1] shadow-sm"
+                            >
                                 Equip
                                 {prices.equip > 0}
                                 <span> (Cost ${prices.equip})</span>
@@ -188,7 +196,7 @@ export default function InventoryAsunaView() {
                             name="accessory_ids"
                             size={availableAccessories.length}
                             multiple
-                            className="w-full mt-2 max-w-md"
+                            className="w-full mt-2 max-w-md text-white bg-transparent border border-gray-400 rounded"
                         >
                             {availableAccessories.map(acc => {
                                 return (

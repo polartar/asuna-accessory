@@ -36,6 +36,7 @@ export const loader: LoaderFunction = async ({ request }) => {
             getOwnAsunas(AsunaContract, address, { readOnly: false }),
             getOwnAccessories(AccessoryContract, address, { readOnly: false }),
         ])
+
         return json<LoaderData>({
             asunas: data[0],
             accessories: data[1],

@@ -78,7 +78,6 @@ export async function getOwnAccessories(
             ownerId: `owner-${ownerAddr.toLowerCase()}`,
         }
     )
-
     if (!data.owner) {
         return []
     }
@@ -106,6 +105,7 @@ export async function getOwnAccessories(
             }
             return true
         })
+
         await fetchAndCacheAccessories(contract, uncachedIds)
     }
 
