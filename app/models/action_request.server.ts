@@ -144,34 +144,34 @@ export async function createActionRequest(input: {
                 }),
             })
 
-            const requests = await tx.actionRequest.findMany({
-                where: {
-                    accessory_id: {
-                        in: input.accessoryIds,
-                    },
-                    action_type: input.actionType,
-                    asuna_id: input.asunaId,
-                    txn_state: TxnState.Pending,
-                    req_address: input.requesterAddress,
-                    txn_hash: txn.hash,
-                },
-                take: reqCount.count,
-            })
+            // const requests = await tx.actionRequest.findMany({
+            //     where: {
+            //         accessory_id: {
+            //             in: input.accessoryIds,
+            //         },
+            //         action_type: input.actionType,
+            //         asuna_id: input.asunaId,
+            //         txn_state: TxnState.Pending,
+            //         req_address: input.requesterAddress,
+            //         txn_hash: txn.hash,
+            //     },
+            //     take: reqCount.count,
+            // })
 
-            await eventbridge.send(
-                new PutEventsCommand({
-                    Entries: requests.map(r => {
-                        return makeEBEquipmentRequest({
-                            accessoryId: r.accessory_id,
-                            actionType: r.action_type,
-                            asunaId: r.asuna_id,
-                            requestId: r.id,
-                            requestorAddress: r.req_address,
-                            txnHash: r.txn_hash,
-                        })
-                    }),
-                })
-            )
+            // await eventbridge.send(
+            //     new PutEventsCommand({
+            //         Entries: requests.map(r => {
+            //             return makeEBEquipmentRequest({
+            //                 accessoryId: r.accessory_id,
+            //                 actionType: r.action_type,
+            //                 asunaId: r.asuna_id,
+            //                 requestId: r.id,
+            //                 requestorAddress: r.req_address,
+            //                 txnHash: r.txn_hash,
+            //             })
+            //         }),
+            //     })
+            // )
 
             return
         },
