@@ -58,7 +58,7 @@ export default function InventoryView() {
                 </Form>
             </div>
 
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 gap-y-8">
                 <div>
                     <h2 className="text-2xl">Asunas</h2>
                     <ul className="mt-6 grid gap-2 grid-cols-3 justify-items-center">

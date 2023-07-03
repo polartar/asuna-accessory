@@ -135,7 +135,7 @@ export default function InventoryAsunaView() {
                 <p>Balance ${wallet?.balance ?? 0}</p>
             </div>
 
-            <div className="grid md:grid-cols-2 mt-4 gap-3 text-center md:text-left">
+            <div className="grid md:grid-cols-2 mt-4 gap-3 text-center md:text-left gap-y-5">
                 <div>
                     <div className="flex items-center flex-col md:block">
                         <p>Asuna {asuna.token_id}</p>
