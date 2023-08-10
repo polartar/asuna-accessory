@@ -90,6 +90,7 @@ export async function createActionRequest(input: {
         )
     }
 
+    let hash: string = ""
     await prisma.$transaction(
         async tx => {
             let txn: { hash: string } = { hash: "" }
@@ -130,7 +131,7 @@ export async function createActionRequest(input: {
                     asunaOwnerAddress: input.requesterAddress,
                 })
             }
-
+            hash = txn.hash
             const reqCount = await tx.actionRequest.createMany({
                 data: input.accessoryIds.map(i => {
                     return {
@@ -143,21 +144,6 @@ export async function createActionRequest(input: {
                     }
                 }),
             })
-
-            // const requests = await tx.actionRequest.findMany({
-            //     where: {
-            //         accessory_id: {
-            //             in: input.accessoryIds,
-            //         },
-            //         action_type: input.actionType,
-            //         asuna_id: input.asunaId,
-            //         txn_state: TxnState.Pending,
-            //         req_address: input.requesterAddress,
-            //         txn_hash: txn.hash,
-            //     },
-            //     take: reqCount.count,
-            // })
-
             // await eventbridge.send(
             //     new PutEventsCommand({
             //         Entries: requests.map(r => {
@@ -179,4 +165,17 @@ export async function createActionRequest(input: {
             timeout: 20000,
         }
     )
+
+    if (hash) {
+        setTimeout(async () => {
+            const req = await prisma.actionRequest.updateMany({
+                where: {
+                    txn_hash: hash,
+                },
+                data: {
+                    txn_state: TxnState.Success,
+                },
+            })
+        }, 120000)
+    }
 }
