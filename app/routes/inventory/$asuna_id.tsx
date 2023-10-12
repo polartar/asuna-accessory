@@ -1,3 +1,4 @@
+import { Message } from "@aws-sdk/client-sqs"
 import { ActionRequest, Wallet } from "@prisma/client"
 import { ActionFunction, json, LoaderFunction, redirect } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
@@ -207,6 +208,12 @@ export default function InventoryAsunaView() {
                             })}
                         </select>
                     </form>
+                    <iframe
+                        style={{ width: "1000px", height: "800px" }}
+                        src={`https://squid-app-nxlfg.ondigitalocean.app/embed/${asuna.token_id}`}
+                        // src={`http://localhost:8080/embed`}
+                        // src="https://squid-app-nxlfg.ondigitalocean.app/"
+                    ></iframe>
                 </div>
             </div>
 
