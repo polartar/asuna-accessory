@@ -209,7 +209,7 @@ export default function InventoryAsunaView() {
                         </select>
                     </form>
                     <iframe
-                        style={{ width: "1000px", height: "800px" }}
+                        style={{ width: "600px", height: "500px", marginTop: "50px" }}
                         src={`https://squid-app-nxlfg.ondigitalocean.app/embed/${asuna.token_id}`}
                         // src={`http://localhost:8080/embed`}
                         // src="https://squid-app-nxlfg.ondigitalocean.app/"
